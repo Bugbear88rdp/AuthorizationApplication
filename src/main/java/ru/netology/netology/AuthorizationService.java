@@ -2,24 +2,25 @@ package ru.netology.netology;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.netology.netology.model.Authorities;
+import ru.netology.netology.model.User;
 
 import java.util.List;
-
-import static org.apache.logging.log4j.util.Strings.isEmpty;
 
 @Service
 public class AuthorizationService {
     @Autowired
     UserRepository userRepository;
 
-    public List<Authorities> getAuthorities(String user, String password) {
-        if (isEmpty(user) || isEmpty(password)) {
+    public List<Authorities> getAuthorities(User user) {
+        String username = user.getUser();
+        String password = user.getPassword();
+        if (isEmpty(username) || isEmpty(password)) {
             throw new InvalidCredentials("User name or password is empty");
         }
-        List<Authorities> userAuthorities =
-                userRepository.getUserAuthorities(user, password);
+        List<Authorities> userAuthorities = userRepository.getUserAuthorities(username, password);
         if (isEmpty(userAuthorities)) {
-            throw new UnauthorizedUser("Unknown user " + user);
+            throw new UnauthorizedUser("Unknown user " + username);
         }
         return userAuthorities;
     }

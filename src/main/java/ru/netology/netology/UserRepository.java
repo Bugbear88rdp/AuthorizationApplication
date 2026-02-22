@@ -1,8 +1,8 @@
 package ru.netology.netology;
 
 import org.springframework.stereotype.Repository;
+import ru.netology.netology.model.Authorities;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
